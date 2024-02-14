@@ -34,3 +34,8 @@ yarn.lock
 
 # uri files
 uri.json
+
+# JetBrains
+.idea/
+
+
