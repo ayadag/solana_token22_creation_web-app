@@ -1,6 +1,7 @@
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { FC, useEffect, useState } from "react";
+import {getAccount} from "@solana/spl-token";
 
 export const BalanceDisplay: FC = () => {
   const [balance, setBalance] = useState(0);
@@ -11,7 +12,6 @@ export const BalanceDisplay: FC = () => {
     if (!connection || !publicKey) {
       return;
     }
-
     connection.getAccountInfo(publicKey).then((info) => {
       setBalance(info.lamports);
     });
@@ -19,7 +19,7 @@ export const BalanceDisplay: FC = () => {
 
   return (
     <div>
-      <p>{publicKey ? `SOL Balance: ${balance / LAMPORTS_PER_SOL}` : ""}</p>
+      {publicKey ? `SOL Balance of the Token Owner Account: ${balance / LAMPORTS_PER_SOL}` : ""}
     </div>
   );
 };

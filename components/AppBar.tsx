@@ -6,8 +6,7 @@ import Image from "next/image";
 export const AppBar: FC = () => {
   return (
     <div className={styles.AppHeader}>
-      <Image src="/solanaLogo.png" height={30} width={200} />
-      <span>Token Program</span>
+      <span>CryptoAirlines Token Creation Form</span>
       <WalletMultiButton />
     </div>
   );
