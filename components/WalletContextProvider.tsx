@@ -13,7 +13,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({children}) => {
     const wallets = [new PhantomWalletAdapter(),
         new GlowWalletAdapter()];
 
-    const endpoint = web3.clusterApiUrl("devnet");
+    const endpoint = web3.clusterApiUrl("mainnet-beta");
 
     return (
 
