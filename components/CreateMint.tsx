@@ -62,7 +62,7 @@ const CreateMintForm: FC = () => {
             symbol: "CAIR",
             uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
             //TODO: Change additional Metadata
-            additionalMetadata: [["description", "CryptoAirlines Token"]],
+            additionalMetadata: [["telegram", "https://t.me/cryptoairlineskb"], ["website","https://cryptoairlines.foundation/"],["twitter", "https://twitter.com/_CryptoAirlines?t=iMBgvvBPHJP1H7-zfZZQRA&s=08"]],
         };
 
         const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
