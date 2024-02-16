@@ -60,7 +60,7 @@ const CreateMintForm: FC = () => {
             mint: mint,
             name: "CryptoAirlines",
             symbol: "CAIR",
-            uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
+            uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_production_uri.json",
             //TODO: Change additional Metadata
             additionalMetadata: [
             ["website","https://cryptoairlines.foundation/"],
