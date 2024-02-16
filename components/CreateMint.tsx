@@ -19,7 +19,7 @@ import {
     createMintToInstruction,
     createAssociatedTokenAccountInstruction,
     getAssociatedTokenAddress,
-    ASSOCIATED_TOKEN_PROGRAM_ID
+    ASSOCIATED_TOKEN_PROGRAM_ID, createUpdateFieldInstruction
 } from "@solana/spl-token";
 import {
     createInitializeInstruction,
@@ -62,7 +62,7 @@ const CreateMintForm: FC = () => {
             symbol: "CAIR",
             uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
             //TODO: Change additional Metadata
-            additionalMetadata: [["telegram", "https://t.me/cryptoairlineskb"], ["website","https://cryptoairlines.foundation/"],["twitter", "https://twitter.com/_CryptoAirlines?t=iMBgvvBPHJP1H7-zfZZQRA&s=08"]],
+            additionalMetadata: [["website","https://cryptoairlines.foundation/"]],
         };
 
         const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
@@ -124,6 +124,14 @@ const CreateMintForm: FC = () => {
             symbol: metaData.symbol,
             uri: metaData.uri,
         });
+
+        const updateFieldInstruction = createUpdateFieldInstruction({
+            programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+            metadata: mint, // Account address that holds the metadata
+            updateAuthority: mintAuthority, // Authority that can update the metadata
+            field: metaData.additionalMetadata[0][0], // key
+            value: metaData.additionalMetadata[0][1], // value
+        });
         const owner = new PublicKey(event.target.owner.value);
         const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
 
@@ -133,6 +141,7 @@ const CreateMintForm: FC = () => {
             initializeTransferFeeConfig,
             initializeMintInstruction,
             initializeMetadataInstruction,
+            updateFieldInstruction
         );
 
         const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
