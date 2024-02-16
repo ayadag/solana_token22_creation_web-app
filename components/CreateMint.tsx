@@ -55,24 +55,20 @@ const CreateMintForm: FC = () => {
 
         // METADATA POINTER STUFF
         const updateFromUser = new PublicKey(event.target.owner.value);
-        // const metaData: TokenMetadata = {
-        //     updateAuthority: updateFromUser,
-        //     mint: mint,
-        //     name: "CryptoAirlines",
-        //     symbol: "CAIR",
-        //     uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
-        //     //TODO: Change additional Metadata
-        //     additionalMetadata: [["website","https://cryptoairlines.foundation/"]],
-        // };
         const metaData: TokenMetadata = {
             updateAuthority: updateFromUser,
             mint: mint,
-            name: "Aley",
-            symbol: "Aleyn",
-            uri: "https://raw.githubusercontent.com/solana-developers/opos-asset/main/assets/DeveloperPortal/metadata.json",
+            name: "CryptoAirlines",
+            symbol: "CAIR",
+            uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
             //TODO: Change additional Metadata
-            additionalMetadata: [],
+            additionalMetadata: [
+            ["website","https://cryptoairlines.foundation/"],
+            ["twitter","https://x.com/_CryptoAirlines?t=iMBgvvBPHJP1H7-zfZZQRA&s=08"],
+            ["telegram","https://t.me/cryptoairlineskb"]
+            ]
         };
+
 
         const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
         const metadataLen = pack(metaData).length;
@@ -134,13 +130,27 @@ const CreateMintForm: FC = () => {
             uri: metaData.uri,
         });
 
-        // const updateFieldInstruction = createUpdateFieldInstruction({
-        //     programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
-        //     metadata: mint, // Account address that holds the metadata
-        //     updateAuthority: mintAuthority, // Authority that can update the metadata
-        //     field: metaData.additionalMetadata[0][0], // key
-        //     value: metaData.additionalMetadata[0][1], // value
-        // });
+        const updateFieldInstruction = createUpdateFieldInstruction({
+            programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+            metadata: mint, // Account address that holds the metadata
+            updateAuthority: updateFromUser, // Authority that can update the metadata
+            field: metaData.additionalMetadata[0][0], // key
+            value: metaData.additionalMetadata[0][1], // value
+        });
+        const updateFieldInstruction2 = createUpdateFieldInstruction({
+            programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+            metadata: mint, // Account address that holds the metadata
+            updateAuthority: updateFromUser, // Authority that can update the metadata
+            field: metaData.additionalMetadata[1][0], // key
+            value: metaData.additionalMetadata[1][1], // value
+        });
+        const updateFieldInstruction3 = createUpdateFieldInstruction({
+            programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+            metadata: mint, // Account address that holds the metadata
+            updateAuthority: updateFromUser, // Authority that can update the metadata
+            field: metaData.additionalMetadata[2][0], // key
+            value: metaData.additionalMetadata[2][1], // value
+        });
         const owner = new PublicKey(event.target.owner.value);
         const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
 
@@ -150,7 +160,9 @@ const CreateMintForm: FC = () => {
             initializeTransferFeeConfig,
             initializeMintInstruction,
             initializeMetadataInstruction,
-            // updateFieldInstruction
+            updateFieldInstruction,
+            updateFieldInstruction2,
+            updateFieldInstruction3
         );
 
         const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
@@ -272,12 +284,6 @@ const CreateMintForm: FC = () => {
             ) : (
                 <span>Please Connect Your Wallet</span>
             )}
-            {/*{txSig && (*/}
-            {/*    <div>*/}
-            {/*        Token Mint Address: {mintAddress}*/}
-            {/*        Transactions can be viewed at <a href={generateExplorerTxUrl(txSig)}>Solana Explorer</a>*/}
-            {/*    </div>*/}
-            {/*)}*/}
         </div>
     );
 };
