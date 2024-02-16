@@ -12,11 +12,11 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({children}) => {
     const wallets = [new PhantomWalletAdapter(),
         new GlowWalletAdapter()];
 
-    const endpoint = web3.clusterApiUrl("mainnet-beta");
-
+    const endpoint = new web3.Connection("https://palpable-wiser-morning.solana-mainnet.quiknode.pro/458e1acd4eac134013635891edb37ca0076383af/");
+    const strEnd = endpoint.rpcEndpoint
     return (
 
-        <ConnectionProvider endpoint={endpoint} >
+        <ConnectionProvider endpoint={strEnd} >
             <WalletProvider wallets={wallets}>
                 <WalletModalProvider>
                     {children}
