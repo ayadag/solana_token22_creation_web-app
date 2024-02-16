@@ -55,14 +55,23 @@ const CreateMintForm: FC = () => {
 
         // METADATA POINTER STUFF
         const updateFromUser = new PublicKey(event.target.owner.value);
+        // const metaData: TokenMetadata = {
+        //     updateAuthority: updateFromUser,
+        //     mint: mint,
+        //     name: "CryptoAirlines",
+        //     symbol: "CAIR",
+        //     uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
+        //     //TODO: Change additional Metadata
+        //     additionalMetadata: [["website","https://cryptoairlines.foundation/"]],
+        // };
         const metaData: TokenMetadata = {
             updateAuthority: updateFromUser,
             mint: mint,
-            name: "CryptoAirlines",
-            symbol: "CAIR",
-            uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_uri.json",
+            name: "Aley",
+            symbol: "Aleyn",
+            uri: "https://raw.githubusercontent.com/solana-developers/opos-asset/main/assets/DeveloperPortal/metadata.json",
             //TODO: Change additional Metadata
-            additionalMetadata: [["website","https://cryptoairlines.foundation/"]],
+            additionalMetadata: [],
         };
 
         const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
@@ -125,13 +134,13 @@ const CreateMintForm: FC = () => {
             uri: metaData.uri,
         });
 
-        const updateFieldInstruction = createUpdateFieldInstruction({
-            programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
-            metadata: mint, // Account address that holds the metadata
-            updateAuthority: mintAuthority, // Authority that can update the metadata
-            field: metaData.additionalMetadata[0][0], // key
-            value: metaData.additionalMetadata[0][1], // value
-        });
+        // const updateFieldInstruction = createUpdateFieldInstruction({
+        //     programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+        //     metadata: mint, // Account address that holds the metadata
+        //     updateAuthority: mintAuthority, // Authority that can update the metadata
+        //     field: metaData.additionalMetadata[0][0], // key
+        //     value: metaData.additionalMetadata[0][1], // value
+        // });
         const owner = new PublicKey(event.target.owner.value);
         const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
 
@@ -141,7 +150,7 @@ const CreateMintForm: FC = () => {
             initializeTransferFeeConfig,
             initializeMintInstruction,
             initializeMetadataInstruction,
-            updateFieldInstruction
+            // updateFieldInstruction
         );
 
         const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
@@ -167,7 +176,8 @@ const CreateMintForm: FC = () => {
         catch (error) {
             console.error("Transaction failed", error);
         }
-
+        console.log("Mint Address", mint.toBase58());
+        console.log("Transaction Signature", transactionSignature);
         // Create associated token account
         const ATAdress = await getAssociatedTokenAddress(
             mint,
@@ -175,7 +185,8 @@ const CreateMintForm: FC = () => {
             false,
             TOKEN_2022_PROGRAM_ID
         );
-
+        console.log("ATA", ATAdress.toBase58());
+        console.log("Mint", mint.toBase58());
         // Instruction to create associated token account
         const ATA = createAssociatedTokenAccountInstruction(
             publicKey,
@@ -185,6 +196,7 @@ const CreateMintForm: FC = () => {
             TOKEN_2022_PROGRAM_ID,
             ASSOCIATED_TOKEN_PROGRAM_ID
         );
+        console.log("ATA2", ATA);
 
         // Instruction to mint tokens to associated token account
         const mintToInstruction = createMintToInstruction(
