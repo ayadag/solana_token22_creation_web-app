@@ -58,14 +58,14 @@ const CreateMintForm: FC = () => {
         const metaData: TokenMetadata = {
             updateAuthority: updateFromUser,
             mint: mint,
-            name: "aleyna",
-            symbol: "Aly",
-            uri: "https://raw.githubusercontent.com/solana-developers/opos-asset/main/assets/DeveloperPortal/metadata.json",
+            name: "CryptoAirlines",
+            symbol: "CAIR",
+            uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_production_uri.json",
             //TODO: Change additional Metadata
             additionalMetadata: [
-            ["website","x"],
-            ["twitter","x"],
-            ["telegram","x"]
+            ["website","https://cryptoairlines.foundation/"],
+            ["twitter","https://x.com/_CryptoAirlines?t=iMBgvvBPHJP1H7-zfZZQRA&s=08"],
+            ["telegram","https://t.me/cryptoairlineskb"]
             ]
         };
 
