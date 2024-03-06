@@ -19,7 +19,7 @@ import {
     createMintToInstruction,
     createAssociatedTokenAccountInstruction,
     getAssociatedTokenAddress,
-    ASSOCIATED_TOKEN_PROGRAM_ID, createUpdateFieldInstruction
+    ASSOCIATED_TOKEN_PROGRAM_ID, createUpdateFieldInstruction, getOrCreateAssociatedTokenAccount
 } from "@solana/spl-token";
 import {
     createInitializeInstruction,
@@ -274,6 +274,7 @@ const CreateMintForm: FC = () => {
         <div>
             {publicKey ? (
                 <form onSubmit={createMint} className={styles.form}>
+                    <h2>Create Mint</h2>
                     <label htmlFor="owner">Token Account Owner:</label>
                     <input
                         id="owner"
@@ -295,7 +296,7 @@ const CreateMintForm: FC = () => {
                     </button>
                 </form>
             ) : (
-                <span>Please Connect Your Wallet</span>
+                <div className={styles.errorMessage}>Please connect your wallet to continue</div>
             )}
         </div>
     );
